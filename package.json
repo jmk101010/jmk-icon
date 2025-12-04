@@ -1,0 +1,42 @@
+{
+  "name": "jmk-icon",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist src/icons",
+    "optimize:svg": "svgo --config svgo.config.cjs -f svg -o svg/optimized -r",
+    "build:icons:material": "svgr --no-index --config-file svgr.config.cjs --out-dir src/icons svg/optimized/material",
+    "build:icons:ibm": "svgr --no-index --config-file svgr.config.cjs --out-dir src/icons svg/optimized/ibm",
+    "build:icons": "pnpm run build:icons:material && pnpm run build:icons:ibm",
+    "build:index": "node scripts/generate-index.js",
+    "build:rollup": "rollup -c",
+    "build": "pnpm run clean && pnpm run optimize:svg && pnpm run build:icons && pnpm run build:index && pnpm run build:rollup",
+    "prepublishOnly": "npm run build"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "dependencies": {
+    "react": ">=16.8.0",
+    "tslib": "^2.8.1"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@svgr/cli": "^8.1.0",
+    "@types/react": "^18.0.0",
+    "rollup": "^4.9.6",
+    "rollup-plugin-typescript2": "^0.36.0",
+    "svgo": "^3.2.0",
+    "typescript": "^5.3.3"
+  }
+}

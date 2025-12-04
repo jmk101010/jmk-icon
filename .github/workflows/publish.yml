@@ -1,0 +1,25 @@
+name: NPM Package Publish
+
+on:
+  release:
+    types: [created] # 새 릴리스 생성 시 배포 실행
+
+jobs:
+  publish-npm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@${{ github.repository_owner }}' # 개인 계정명 자동 사용
+
+      - run: npm install
+      - run: npm run build
+
+      - name: Publish to GitHub Packages
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
