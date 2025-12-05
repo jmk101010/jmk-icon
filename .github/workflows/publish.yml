@@ -28,6 +28,9 @@ jobs:
         run: pnpm run build
 
       - name: Publish to GitHub Packages
-        run: pnpm publish --no-git-checks
+        run: |
+          # 인증 정보 강제 주입
+          echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" > .npmrc
+          pnpm publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
