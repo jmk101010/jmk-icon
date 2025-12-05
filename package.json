@@ -1,6 +1,6 @@
 {
   "name": "@jmk101010/jmk-icon",
-  "version": "1.0.3",
+  "version": "1.0.0",
   "description": "",
   "type": "module",
   "main": "dist/index.cjs.js",
