@@ -2,24 +2,32 @@ name: NPM Package Publish
 
 on:
   release:
-    types: [created] # 새 릴리스 생성 시 배포 실행
+    types: [created]
 
 jobs:
   publish-npm:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           registry-url: 'https://npm.pkg.github.com'
-          scope: '@${{ github.repository_owner }}' # 개인 계정명 자동 사용
+          scope: '@${{ github.repository_owner }}'
+          cache: 'pnpm'
 
-      - run: npm install
-      - run: npm run build
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build project
+        run: pnpm run build
 
       - name: Publish to GitHub Packages
-        run: npm publish
+        run: pnpm publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
