@@ -14,7 +14,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "declaration": true,
-    "declarationDir": "dist",
+    "outDir": "dist/esm",
     "jsx": "react-jsx"
   },
   "include": ["src"]
