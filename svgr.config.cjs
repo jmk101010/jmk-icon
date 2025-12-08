@@ -1,12 +1,30 @@
 module.exports = {
   // SVGO 설정 파일을 사용하도록 지정
   svgoConfig: require('./svgo.config.cjs'),
-  typescript: true, // TypeScript 파일로 생성
-  icon: true, // ViewBox를 상속받아 아이콘으로 처리
-  dimensions: false, // SVG 자체의 width/height 속성은 제거 (props로 제어)
+  typescript: true,
+  icon: false,
+  dimensions: true,
   // Props를 받아 크기와 색상을 제어하는 템플릿 사용
-  template: (variables, { tpl }) => {
-    return tpl`
+    template: (variables, { tpl }) => {
+      variables.jsx.openingElement.attributes.push(
+        {
+          type: "JSXAttribute",
+          name: { type: "JSXIdentifier", name: "width" },
+          value: { type: "JSXExpressionContainer", expression: { type: "Identifier", name: "size" } }
+        },
+        {
+          type: "JSXAttribute",
+          name: { type: "JSXIdentifier", name: "height" },
+          value: { type: "JSXExpressionContainer", expression: { type: "Identifier", name: "size" } }
+        },
+        {
+          type: "JSXAttribute",
+          name: { type: "JSXIdentifier", name: "fill" },
+          value: { type: "JSXExpressionContainer", expression: { type: "Identifier", name: "color" } }
+        }
+      );
+  
+      return tpl`
         import * as React from 'react';
         import { IconProps } from '../types';
   
@@ -16,7 +34,6 @@ module.exports = {
   
         export default ${variables.componentName};
       `;
-  },
-  // 파일명을 PascalCase로 자동 변환 (예: home-icon.svg -> HomeIcon)
+    },  // 파일명을 PascalCase로 자동 변환 (예: home-icon.svg -> HomeIcon)
   plugins: ['@svgr/plugin-svgo', '@svgr/plugin-jsx', '@svgr/plugin-prettier'],
 };
