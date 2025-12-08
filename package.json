@@ -1,6 +1,6 @@
 {
   "name": "@jmk101010/jmk-icon",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "packageManager": "pnpm@10.14.0",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
