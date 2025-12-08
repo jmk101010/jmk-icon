@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/jmk101010/jmk-icon/compare/v1.0.3...v1.0.4) (2025-12-08)
+
+
+### Bug Fixes
+
+* preserve viewBox in SVGO and bind size prop in SVGR ([467c29a](https://github.com/jmk101010/jmk-icon/commit/467c29a489adeaf4a3d446ec8e07de4b3509c86f))
+
 ## [1.0.3](https://github.com/jmk101010/jmk-icon/compare/v1.0.2...v1.0.3) (2025-12-08)
 
 
